@@ -1,0 +1,45 @@
+import numpy as np
+
+# Initialize parameters
+C = 0.1  # Learning rate (η)
+epochs = 100  # Number of iterations
+
+# Input data (X) and Desired Output (D)
+X = np.array([[10, 2], [2, -5], [5, 5]])  # Inputs
+D = np.array([[1, -1, -1], [-1, 1, -1], [-1, -1, 1]])  # Desired outputs
+
+# Add bias input to X
+X = np.hstack((X, -1 * np.ones((X.shape[0], 1))))  # Add a column of -1s for bias
+
+# Initialize weights matrix W
+W = np.array([[1, -2, 0], [0, -1, 2], [1, 3, -2]])
+
+# Training phase
+for epoch in range(epochs):
+    for i in range(X.shape[0]):
+        # Calculate net input (dot product of input and weights)
+        V = np.dot(X[i, :], W)
+
+        # Apply activation function (sign function)
+        Y = np.sign(V)
+
+        # Compute the error (difference between desired and actual output)
+        E = D[i, :] - Y
+
+        # Update weights using Delta rule
+        W = W + C * np.outer(X[i, :], E)
+
+# Display final weights
+print("Final Weights:")
+print(W)
+
+# Display input and output after training
+for i in range(X.shape[0]):
+    # Calculate net input (dot product of input and weights)
+    V = np.dot(X[i, :], W)
+
+    # Apply activation function (sign function)
+    Y = np.sign(V)
+
+    # Display the input and corresponding output
+    print(f"Input: [{X[i, 0]:d} {X[i, 1]:d} {int(X[i, 2]):d}] -> Output: [{int(Y[0]):d} {int(Y[1]):d} {int(Y[2]):d}]")
