@@ -1,0 +1,41 @@
+import numpy as np
+
+inputs = np.array([[-1,-1],[-1,1],[1,-1],[1,1]])
+targets = np.array([-1,1,1,-1])
+
+weights = np.random.rand(2)*0.1
+learning_rate =0.1
+epochs = 1000
+
+def activation(x):
+  return 1 if x>=0 else -1
+
+for epoch in range(epochs):
+  for i in range(len(inputs)):
+    input_vector = inputs[i]
+    target = targets[i]
+    
+    weighted_sum = np.dot(input_vector,weights)
+
+    net = activation(weighted_sum)
+
+    weights += learning_rate * net * input_vector
+
+print(weights)
+
+# Define test function
+def test_xor(weights, inputs):
+    outputs = []
+    for input_vector in inputs:
+        weighted_sum = np.dot(input_vector, weights)
+        output = activation(weighted_sum)
+        outputs.append(output)
+    return outputs
+
+# Test the model on XOR inputs
+test_outputs = test_xor(weights, inputs)
+
+# Print the results
+print("Testing XOR function with trained weights:")
+for i, input_vector in enumerate(inputs):
+    print(f"Input: {input_vector}, Target: {targets[i]}, Predicted Output: {test_outputs[i]}")
