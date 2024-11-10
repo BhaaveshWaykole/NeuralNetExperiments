@@ -1,0 +1,34 @@
+import pandas as pd
+
+# Define inputs
+inputs = [[1, 1], [1, 0], [0, 1], [0, 0]]
+
+# Initialize weights
+w1 = 1
+w2 = 1
+
+# XOR Gate (requires different thresholding logic)
+print("\nXOR Gate")
+xor_x1_values = []
+xor_x2_values = []
+xor_weighted_sums = []
+xor_outputs = []
+
+for x1, x2 in inputs:
+    weighted_sum = w1 * x1 + w2 * x2
+    # XOR output is 1 only if x1 and x2 are different
+    output = 1 if (x1 != x2) else 0
+
+    xor_x1_values.append(x1)
+    xor_x2_values.append(x2)
+    xor_weighted_sums.append(weighted_sum)
+    xor_outputs.append(output)
+
+xor_results = pd.DataFrame({
+    'x1': xor_x1_values,
+    'x2': xor_x2_values,
+    'Weighted_Sum': xor_weighted_sums,
+    'Output': xor_outputs
+})
+
+print(xor_results)

@@ -1,0 +1,33 @@
+import pandas as pd
+
+# Define inputs
+inputs = [[1, 1], [1, 0], [0, 1], [0, 0]]
+
+# Initialize weights
+w1 = 1
+w2 = 1
+
+# AND-NOT Gate with Threshold=0.5 (similar to NAND logic)
+print("\nAND-NOT Gate with Threshold=0.5")
+andnot_x1_values = []
+andnot_x2_values = []
+andnot_weighted_sums = []
+andnot_outputs = []
+
+for x1, x2 in inputs:
+    weighted_sum = w1 * x1 - w2 * x2  # Subtract x2 instead of adding
+    output = 1 if weighted_sum >= 0.5 else 0
+
+    andnot_x1_values.append(x1)
+    andnot_x2_values.append(x2)
+    andnot_weighted_sums.append(weighted_sum)
+    andnot_outputs.append(output)
+
+andnot_results = pd.DataFrame({
+    'x1': andnot_x1_values,
+    'x2': andnot_x2_values,
+    'Weighted_Sum': andnot_weighted_sums,
+    'Output': andnot_outputs
+})
+
+print(andnot_results)
