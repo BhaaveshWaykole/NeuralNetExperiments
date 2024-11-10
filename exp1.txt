@@ -1,0 +1,57 @@
+import pandas as pd
+
+def mcculloch_pitts_and_simulation():
+    # Define inputs and threshold values
+    inputs = [[1, 1], [1, 0], [0, 1], [0, 0]]
+
+    print("AND Function with Threshold=2")
+    simulate_and(inputs, threshold=2)
+
+    print("\nAND Function with Threshold=1")
+    simulate_and(inputs, threshold=1)
+
+def simulate_and(inputs, threshold):
+    # Initialize weights
+    w1 = 0.5
+    w2 = 0.5
+
+    # Lists to store values for the table
+    x1_values = []
+    x2_values = []
+    weighted_sums = []
+    outputs = []
+
+    for i in range(len(inputs)):
+        x1 = inputs[i][0]
+        x2 = inputs[i][1]
+        weighted_sum = w1 * x1 + w2 * x2
+        output = mcculloch_pitts_and(x1, x2, w1, w2, threshold)
+
+        # Append values to lists
+        x1_values.append(x1)
+        x2_values.append(x2)
+        weighted_sums.append(weighted_sum)
+        outputs.append(output)
+
+    # Create a DataFrame to display results as a table
+    results_table = pd.DataFrame({
+        'x1': x1_values,
+        'x2': x2_values,
+        'Weighted_Sum': weighted_sums,
+        'Output': outputs
+    })
+
+    print(results_table)
+
+def mcculloch_pitts_and(x1, x2, w1, w2, threshold):
+    # Calculate weighted sum
+    weighted_sum = w1 * x1 + w2 * x2
+
+    # Apply threshold to determine output
+    if weighted_sum >= threshold:
+        return 1
+    else:
+        return 0
+
+# Run the simulation
+mcculloch_pitts_and_simulation()
