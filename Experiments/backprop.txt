@@ -1,0 +1,81 @@
+import numpy as np
+
+# Sigmoid activation function and its derivative
+def sigmoid(x):
+    return 1 / (1 + np.exp(-x))
+
+def sigmoid_derivative(x):
+    return x * (1 - x)
+
+# Mean Squared Error loss function
+def mse_loss(target, output):
+    return np.mean((target - output) ** 2)
+
+# Initialize network parameters
+input_size = 3  # Number of input neurons
+hidden_size = 4  # Number of neurons in the hidden layer
+output_size = 1  # Number of output neurons
+
+# Randomly initialize weights and biases
+np.random.seed(42)
+weights_input_hidden = np.random.rand(input_size, hidden_size) - 0.5
+weights_hidden_output = np.random.rand(hidden_size, output_size) - 0.5
+bias_hidden = np.random.rand(hidden_size) - 0.5
+bias_output = np.random.rand(output_size) - 0.5
+
+# Hyperparameters
+learning_rate = 0.1
+epochs = 1000
+
+# Training data (example with continuous outputs)
+inputs = np.array([
+    [0, 0, 1],
+    [1, 1, 1],
+    [1, 0, 1],
+    [0, 1, 1]
+])
+targets = np.array([[0], [1], [1], [0]])
+
+# Training the network
+for epoch in range(epochs):
+    # Forward pass
+    hidden_layer_input = np.dot(inputs, weights_input_hidden) + bias_hidden
+    hidden_layer_output = sigmoid(hidden_layer_input)
+    
+    final_layer_input = np.dot(hidden_layer_output, weights_hidden_output) + bias_output
+    final_output = sigmoid(final_layer_input)
+    
+    # Compute error (MSE loss)
+    error = targets - final_output
+    loss = mse_loss(targets, final_output)
+    
+    # Backward pass
+    # Calculate gradients for output layer
+    d_output = error * sigmoid_derivative(final_output)
+    
+    # Calculate gradients for hidden layer
+    error_hidden_layer = d_output.dot(weights_hidden_output.T)
+    d_hidden_layer = error_hidden_layer * sigmoid_derivative(hidden_layer_output)
+    
+    # Update weights and biases
+    weights_hidden_output += hidden_layer_output.T.dot(d_output) * learning_rate
+    bias_output += np.sum(d_output, axis=0) * learning_rate
+    
+    weights_input_hidden += inputs.T.dot(d_hidden_layer) * learning_rate
+    bias_hidden += np.sum(d_hidden_layer, axis=0) * learning_rate
+    
+    # Print loss every 100 epochs
+    if epoch % 100 == 0:
+        print(f"Epoch {epoch}, Loss: {loss:.4f}")
+
+# Testing the network
+def predict(input_data):
+    hidden_layer_input = np.dot(input_data, weights_input_hidden) + bias_hidden
+    hidden_layer_output = sigmoid(hidden_layer_input)
+    final_layer_input = np.dot(hidden_layer_output, weights_hidden_output) + bias_output
+    return sigmoid(final_layer_input)
+
+# Test predictions
+test_outputs = predict(inputs)
+print("\nPredictions after training:")
+print(test_outputs)
