@@ -1,0 +1,41 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Define input range
+x = np.arange(-10, 10.1, 0.1)
+
+# Linear Activation
+y_linear = x
+plt.subplot(2, 2, 1)
+plt.plot(x, y_linear, 'b', linewidth=2)
+plt.title("Linear Activation")
+plt.xlabel('x: input')
+plt.ylabel('Y')
+
+# Sigmoid Activation
+y_sigmoid = 1 / (1 + np.exp(-x))
+plt.subplot(2, 2, 3)
+plt.plot(x, y_sigmoid, 'r', linewidth=2)
+plt.title("Sigmoid Activation")
+plt.xlabel('X')
+plt.ylabel('Y')
+
+# ReLU Activation
+y_relu = np.maximum(0, x)
+plt.subplot(2, 2, 2)
+plt.plot(x, y_relu, 'b', linewidth=2)
+plt.title("ReLU Activation")
+plt.xlabel('x: input')
+plt.ylabel('Y')
+
+# Leaky ReLU Activation
+y_leaky_relu = np.maximum(0.01 * x, x)
+plt.subplot(2, 2, 4)
+plt.plot(x, y_leaky_relu, 'b', linewidth=2)
+plt.title("Leaky ReLU Activation")
+plt.xlabel('x: input')
+plt.ylabel('Y')
+
+# Display all plots
+plt.tight_layout()
+plt.show()
