@@ -39,3 +39,4 @@ test_outputs = test_xor(weights, inputs)
 print("Testing XOR function with trained weights:")
 for i, input_vector in enumerate(inputs):
     print(f"Input: {input_vector}, Target: {targets[i]}, Predicted Output: {test_outputs[i]}")
+

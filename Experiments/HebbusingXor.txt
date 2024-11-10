@@ -1,0 +1,26 @@
+import numpy as np
+import pandas as pd
+x1 = np.array([1,1,-1,-1])
+x2 = np.array([1,-1,1,-1])
+y = np.array([-1,1,1,-1])
+binp = np.array([1,1,1,1])
+
+w1 = 0
+w2 = 0
+b = 0
+alpha = 1
+epoch = 100
+
+for i in range(len(x1)): 
+    delta_w1 = alpha * x1[i] * y[i]
+    delta_w2 = alpha * x2[i] * y[i]
+    delta_b = y[i] * alpha
+    
+    w1 = w1 + delta_w1
+    w2 = w2 + delta_w2
+    b = b + delta_b
+final_table = pd.DataFrame({
+    'x1': x1, 'x2': x2, 'b_input': binp,'y': y,'Delta_w1': delta_w1, 'Delta_w2': delta_w2, 'Delta_b': delta_b, 'W1': w1, 'W2': w2, 'B': b
+})
+
+print(final_table)
